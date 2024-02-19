@@ -1,7 +1,18 @@
 import { Container, Grid, Box, Button } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
+import firebase from 'firebase/compat/app';
+
+import { Context } from '../../';
 
 const Login = () => {
+  const {auth} = useContext(Context);
+
+  const login = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const {user} = await auth.signInWithPopup(provider);
+    console.log(user);
+  };
+
   return (
     <Container>
       <Grid container
@@ -14,7 +25,7 @@ const Login = () => {
               alignItems={"center"}
               justifyContent={"center"}>
           <Box p={5}>
-            <Button variant={"outlined"} style={{ color: '#000' }} text>Войти с помощью Google</Button>
+            <Button onClick={login} variant={"outlined"} style={{ color: '#000' }} text>Войти с помощью Google</Button>
           </Box>
         </Grid>
       </Grid>
